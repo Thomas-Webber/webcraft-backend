@@ -4,7 +4,3 @@ pkg
 bin
 vendor
 builds
-
-src/*
-!src/central
-!src/main.go
