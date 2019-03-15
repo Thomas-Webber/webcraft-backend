@@ -9,9 +9,6 @@ run: build
 clean:
 	rm -f /tmp/$(BINARY_NAME)
 
-dep:
-	go get -d -v
-
 lint: # goreportcard.com, github.com/golang/go/wiki/CodeReviewComments
 	go fmt ./...
 	golint ./...
