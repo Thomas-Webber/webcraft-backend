@@ -43,7 +43,7 @@ func main() {
 	http.HandleFunc("/action", world.ActionHandler)
 	http.HandleFunc("/reset", world.ResetHandler)
 
-	addr := "localhost:" + *port
+	addr := "localhost:" + port
 	log.Println("Starting server at: " + addr)
 	log.Fatal(http.ListenAndServe(addr, nil))
 }
