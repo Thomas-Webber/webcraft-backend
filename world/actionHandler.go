@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-const ZoneLength = 100
+//const ZoneLength = 1023
 
 // World of the game
-var World = make(map[int64]int32)
+var World = make(map[int32]int32)
 
 // Upgrader for gorilla
 var Upgrader = websocket.Upgrader{} // use default options
@@ -18,24 +18,26 @@ var Upgrader = websocket.Upgrader{} // use default options
 // ActionMessage struct of json
 type ActionMessage struct {
 	ActionType string
-	ZoneId int
-	PosX int
-	PosY int
-	PosZ int
-	Color int32
-	Message string
+	ZoneID     int
+	PosX       int32
+	PosY       int32
+	PosZ       int32
+	Color      int32
+	Message    string
 }
 
-func encodeXYZtoInt(x int, y int, z int) int64 {
-	return int64((x << 42) + (y << 21) + z)
+// EncodeXYZtoInt -
+func EncodeXYZtoInt(x int32, y int32, z int32) int32 {
+	return (x << 20) + (y << 10) + z
 }
 
+// AddBlock -
 func AddBlock(jsonByte []byte) error {
 	var actionMessage ActionMessage
 	if err := json.Unmarshal(jsonByte, &actionMessage); err != nil {
 		return err
 	}
-	World[encodeXYZtoInt(actionMessage.PosX, actionMessage.PosY, actionMessage.PosZ)] = actionMessage.Color
+	World[EncodeXYZtoInt(actionMessage.PosX, actionMessage.PosY, actionMessage.PosZ)] = actionMessage.Color
 	return nil
 }
 

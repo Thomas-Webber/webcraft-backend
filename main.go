@@ -25,9 +25,11 @@ func main() {
 		chat.ServeWs(hub, w, r)
 	})
 
-	world.World[100] = 0x00
+	world.World[world.EncodeXYZtoInt(15, 5, 5)] = 0xffffff
+	world.World[world.EncodeXYZtoInt(5, 5, 5)] = 0xff0000
 	http.HandleFunc("/get", world.GetHandler)
 	http.HandleFunc("/action", world.ActionHandler)
+	http.HandleFunc("/reset", world.ResetHandler)
 
 	addr := "localhost:" + *port
 	log.Println("Starting server at: " + addr)

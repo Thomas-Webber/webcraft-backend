@@ -67,7 +67,8 @@ func (c *Client) readPump() {
 			break
 		}
 
-		// TODO create channel for adding block
+		// TODO use channel for adding block
+		log.Println(string(message))
 		if err := world.AddBlock(message); err != nil {
 			log.Fatal(err)
 		} else {
