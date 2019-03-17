@@ -8,5 +8,5 @@ FROM scratch
 ENV ENV=prod
 ENV PORT=8888
 
-COPY --from=builder /app/webcraft webcraft
-ENTRYPOINT ["/go/bin/webcraft"]
+COPY --from=builder /app/webcraft /webcraft
+ENTRYPOINT ["/webcraft"]
