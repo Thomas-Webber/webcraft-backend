@@ -17,14 +17,14 @@ func getEnv(name string, defaultValue string) string {
 }
 
 var port = getEnv("PORT", "8888")
-var env = getEnv("ENV", "dev")
+//var env = getEnv("ENV", "dev")
 
 func main() {
 	log.SetFlags(0)
-	if env == "dev" {
-		world.Upgrader.CheckOrigin = func(r *http.Request) bool { return true }
-		chat.Upgrader.CheckOrigin = func(r *http.Request) bool { return true }
-	}
+	//if env == "dev" {
+	world.Upgrader.CheckOrigin = func(r *http.Request) bool { return true }
+	chat.Upgrader.CheckOrigin = func(r *http.Request) bool { return true }
+	//}
 
 	hub := chat.NewHub()
 	go hub.Run()
@@ -34,12 +34,12 @@ func main() {
 
 	world.World[world.EncodeXYZtoInt(15, 5, 5)] = 0xffffff
 	world.World[world.EncodeXYZtoInt(5, 5, 5)] = 0xff0000
-	http.HandleFunc("/get", world.GetHandler)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := w.Write([]byte("Hello")); err != nil {
 			log.Fatal(err)
 		}
 	})
+	http.HandleFunc("/get", world.GetHandler)
 	http.HandleFunc("/action", world.ActionHandler)
 	http.HandleFunc("/reset", world.ResetHandler)
 
